@@ -1,16 +1,20 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import threading
+import time
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def print_numbers():
+    for i in range(5):
+        time.sleep(1)
+        print(f"Vlákno {threading.current_thread().name}: {i}")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+thread1 = threading.Thread(target=print_numbers, name="Vlákno 1")
+thread2 = threading.Thread(target=print_numbers, name="Vlákno 2")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print("Hlavní vlákno skončilo.")
